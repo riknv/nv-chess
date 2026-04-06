@@ -1,13 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>Nv Chess</title>
+    <title>The Grandmaster Editorial | NV Chess</title>
     <base href="/"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#dae2fd",
+                        "secondary-fixed-dim": "#b9c8de",
+                        "tertiary-fixed": "#c4e7ff",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#39485a",
+                        "on-tertiary": "#00354a",
+                        "error-container": "#93000a",
+                        "outline": "#879487",
+                        "on-secondary-fixed": "#0d1c2d",
+                        "inverse-primary": "#006d36",
+                        "surface-container-lowest": "#060e20",
+                        "inverse-on-surface": "#283044",
+                        "primary-fixed": "#83fba5",
+                        "on-primary-fixed": "#00210c",
+                        "primary-container": "#50c878",
+                        "surface-tint": "#66dd8b",
+                        "on-primary-fixed-variant": "#005227",
+                        "tertiary": "#90d6ff",
+                        "surface": "#0b1326",
+                        "surface-dim": "#0b1326",
+                        "on-error": "#690005",
+                        "tertiary-fixed-dim": "#7bd0ff",
+                        "surface-container-high": "#222a3d",
+                        "on-tertiary-fixed-variant": "#004c69",
+                        "surface-bright": "#31394d",
+                        "outline-variant": "#3e4a3f",
+                        "surface-variant": "#2d3449",
+                        "on-tertiary-fixed": "#001e2c",
+                        "surface-container-highest": "#2d3449",
+                        "on-secondary": "#233143",
+                        "on-primary": "#003919",
+                        "on-surface-variant": "#bdcabc",
+                        "secondary-container": "#39485a",
+                        "error": "#ffb4ab",
+                        "tertiary-container": "#3abef9",
+                        "on-tertiary-container": "#004a66",
+                        "primary-fixed-dim": "#66dd8b",
+                        "primary": "#6ee591",
+                        "surface-container": "#171f33",
+                        "on-primary-container": "#005025",
+                        "background": "#0b1326",
+                        "on-secondary-container": "#a7b6cc",
+                        "surface-container-low": "#131b2e",
+                        "secondary-fixed": "#d4e4fa",
+                        "on-background": "#dae2fd",
+                        "inverse-surface": "#dae2fd",
+                        "secondary": "#b9c8de"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
-<body>
-<nv-root></nv-root>
+<body class="h-screen w-screen flex flex-col">
+    <nv-root class="w-full h-full flex flex-col"></nv-root>
 </body>
 </html>

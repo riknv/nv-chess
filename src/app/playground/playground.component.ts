@@ -35,8 +35,10 @@ export class PlaygroundComponent implements OnDestroy, OnInit {
   
   public mode = signal<'PLAY_VS_MACHINE' | 'SELF_LEARNING'>('PLAY_VS_MACHINE');
   public fenInput = signal<string>('');
+  public playerName = signal<string>('Ricky');
+
   
-  public engineScore = signal<number | string>(0);
+  public engineScore = signal<number>(0);
   public isMate = signal<boolean>(false);
   public bestLine = signal<string[]>([]);
   public difficultyDepth = signal<number>(15);
@@ -47,6 +49,16 @@ export class PlaygroundComponent implements OnDestroy, OnInit {
     }
     return (Number(this.engineScore()) / 100).toFixed(2);
   });
+
+  public getEvalBarHeight(): number {
+    let cp = Number(this.engineScore());
+    if (this.isMate()) {
+      cp = cp > 0 ? 1000 : -1000;
+    }
+    // Convert centipawns to a 0-100% scale where 50% is 0 (even)
+    let percent = 50 + (cp / 1000) * 50;
+    return Math.max(0, Math.min(100, percent));
+  }
 
   constructor() {
     afterNextRender(() => {
