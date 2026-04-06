@@ -1,6 +1,7 @@
 <!-- TopNavBar -->
-<nav class="flex flex-shrink-0 items-center px-8 w-full z-50 h-16 bg-surface font-manrope text-sm tracking-wide uppercase border-b border-outline-variant/10 shadow-sm relative">
-    <div class="text-xl font-bold font-manrope text-primary tracking-tighter">NV Chess</div>
+<nav class="flex flex-shrink-0 items-center px-8 w-full z-50 h-16 bg-surface font-manrope text-sm tracking-wide uppercase border-b border-outline-variant/10 shadow-sm relative gap-3">
+    <img src="logo.png" alt="KIKI Chess AI Logo" class="w-8 h-8 rounded-md shadow-lg border border-primary/20">
+    <div class="text-xl font-bold font-manrope text-primary tracking-tighter">KIKI Chess AI</div>
 </nav>
 
 <div class="flex flex-1 overflow-hidden w-full relative">
@@ -8,42 +9,57 @@
     <main class="flex-1 flex overflow-hidden bg-surface relative justify-center">
         <div class="absolute inset-0 pointer-events-none bg-surface-tint/[0.02]"></div>
         
-        <div class="flex flex-col items-center justify-center py-4 px-8 z-10 w-full h-full overflow-hidden">
-            <!-- Top Player Info -->
-            <div class="w-full flex justify-between items-end mb-6 max-w-[min(55vh,90vw)] lg:max-w-[min(60vh,90vw)] flex-shrink-0">
-                <div class="flex items-center gap-4">
+        <div class="flex flex-row items-center justify-center py-4 px-8 z-10 w-full h-full overflow-hidden gap-8 lg:gap-16">
+            
+            <!-- Left Column: Players -->
+            <div class="flex flex-col justify-between h-[min(70vh,90vw)] lg:h-[min(80vh,90vw)] flex-shrink-0 w-56 lg:w-64">
+                <!-- Top Player Info -->
+                <div class="flex flex-col justify-start gap-4">
                     <div class="p-3 bg-surface-container-high rounded-xl text-on-surface-variant flex items-center gap-3">
-                        <span class="material-symbols-outlined">smart_toy</span>
-                        <span class="font-headline font-bold text-lg">Stockfish 16</span>
-                        <span class="text-xs bg-surface-bright px-2 py-1 rounded text-secondary">AI {{ mode() === 'PLAY_VS_MACHINE' ? ('Lvl '+difficultyDepth()) : 'Active' }}</span>
+                        <span class="material-symbols-outlined text-2xl">smart_toy</span>
+                        <div class="flex flex-col">
+                            <span class="font-headline font-bold text-lg block leading-tight">Stockfish 16</span>
+                            <span class="text-[10px] text-secondary uppercase tracking-widest font-bold mt-0.5">
+                                {{ mode() === 'PLAY_VS_MACHINE' ? ('ELO '+engineElo()) : 'AI Active' }}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- ELO Slider below Stockfish -->
+                    <div *ngIf="mode() === 'PLAY_VS_MACHINE'" class="bg-surface-container-high/30 p-3 rounded-xl border border-outline-variant/10 w-full">
+                        <div class="flex justify-between items-end mb-3">
+                             <h3 class="font-manrope font-extrabold text-[10px] uppercase tracking-widest text-secondary/60">Engine ELO</h3>
+                             <span class="text-[10px] font-bold text-primary">{{ engineElo() }}</span>
+                        </div>
+                        <input type="range" class="w-full accent-primary bg-surface-container-low h-1.5 rounded-lg appearance-none outline-none" min="1" max="20" step="1" 
+                               [ngModel]="difficultyDepth()" 
+                               (ngModelChange)="difficultyDepth.set($event)">
                     </div>
                 </div>
-            </div>
 
-            <!-- The Chessboard -->
-            <div class="relative group max-w-full flex-shrink">
-                <div class="absolute -inset-4 bg-black/40 blur-2xl rounded-full opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                <div class="relative w-[min(55vh,90vw)] lg:w-[min(60vh,90vw)] aspect-square bg-surface-container-highest p-1.5 rounded shadow-2xl mx-auto">
-                    <div #container class="cg-container blue merida w-full h-full rounded overflow-hidden"></div>
-                </div>
-            </div>
-
-            <!-- Bottom Player Info -->
-            <div class="w-full flex justify-between items-start mt-6 max-w-[min(55vh,90vw)] lg:max-w-[min(60vh,90vw)] flex-shrink-0">
-                <div class="flex items-center gap-4">
+                <!-- Bottom Player Info -->
+                <div class="flex flex-col justify-end">
                     <div class="p-3 bg-primary-container/20 rounded-xl text-primary flex items-center gap-3 border border-primary/20">
-                        <div class="w-10 h-10 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center flex-shrink-0">
                             <span class="material-symbols-outlined text-primary">person</span>
                         </div>
                         <div class="flex flex-col justify-center">
                             <!-- Editable Player Name -->
                             <input type="text" 
-                                   class="font-headline font-bold text-lg block leading-none bg-transparent border-none p-0 focus:ring-0 text-primary w-32 focus:outline-none placeholder-primary/50" 
+                                   class="font-headline font-bold text-lg block leading-none bg-transparent border-none p-0 focus:ring-0 text-primary w-full focus:outline-none placeholder-primary/50" 
                                    [(ngModel)]="playerName" 
                                    placeholder="Player Name" />
-                            <span class="text-[10px] text-primary/70 uppercase tracking-widest font-bold mt-1">White</span>
+                            <span class="text-[10px] text-primary/70 uppercase tracking-widest font-bold mt-1.5">White</span>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Right Column: The Chessboard -->
+            <div class="relative group max-w-full flex-shrink">
+                <div class="absolute -inset-4 bg-black/40 blur-2xl rounded-full opacity-50 group-hover:opacity-70 transition-opacity"></div>
+                <div class="relative w-[min(70vh,90vw)] lg:w-[min(80vh,90vw)] aspect-square bg-surface-container-highest p-1.5 rounded shadow-2xl mx-auto">
+                    <div #container class="cg-container blue merida w-full h-full rounded overflow-hidden"></div>
                 </div>
             </div>
         </div>
@@ -84,16 +100,7 @@
                 </div>
             </div>
 
-            <!-- Depth Slider -->
-            <div *ngIf="mode() === 'PLAY_VS_MACHINE'" class="mb-6 bg-surface-container-high/30 p-4 rounded-xl border border-outline-variant/10">
-                <div class="flex justify-between items-end mb-3">
-                     <h3 class="font-manrope font-extrabold text-[10px] uppercase tracking-widest text-secondary/60">Engine Depth</h3>
-                     <span class="text-xs font-bold text-primary">{{ difficultyDepth() }}</span>
-                </div>
-                <input type="range" class="w-full accent-primary bg-surface-container-low h-1.5 rounded-lg appearance-none outline-none" min="1" max="20" step="1" 
-                       [ngModel]="difficultyDepth()" 
-                       (ngModelChange)="difficultyDepth.set($event)">
-            </div>
+            <!-- (Slider moved to left pane) -->
 
             <!-- Deep Analysis -->
             <div class="bg-surface-container-high/30 p-4 rounded-xl border border-outline-variant/10">

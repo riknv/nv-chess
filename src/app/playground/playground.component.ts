@@ -41,7 +41,12 @@ export class PlaygroundComponent implements OnDestroy, OnInit {
   public engineScore = signal<number>(0);
   public isMate = signal<boolean>(false);
   public bestLine = signal<string[]>([]);
-  public difficultyDepth = signal<number>(15);
+  public difficultyDepth = signal<number>(10); // Default to depth 10 (1700 Elo)
+  
+  public engineElo = computed(() => {
+    // Map depth 1-20 to roughly 800 - 2700 Elo
+    return 700 + (this.difficultyDepth() * 100);
+  });
 
   public formatScore = computed(() => {
     if (this.isMate()) {
