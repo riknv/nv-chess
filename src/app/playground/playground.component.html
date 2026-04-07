@@ -1,18 +1,17 @@
 <!-- TopNavBar -->
-<nav class="flex flex-shrink-0 items-center px-8 w-full z-50 h-16 bg-surface font-manrope text-sm tracking-wide uppercase border-b border-outline-variant/10 shadow-sm relative gap-3">
+<nav class="flex flex-shrink-0 items-center px-4 xl:px-8 w-full z-50 h-16 bg-surface font-manrope text-sm tracking-wide uppercase border-b border-outline-variant/10 shadow-sm relative gap-3">
     <img src="logo.png" alt="KIKI Chess AI Logo" class="w-8 h-8 rounded-md shadow-lg border border-primary/20">
     <div class="text-xl font-bold font-manrope text-primary tracking-tighter">KIKI Chess AI</div>
 </nav>
 
-<div class="flex flex-1 overflow-hidden w-full relative">
+<div class="flex flex-col xl:flex-row flex-1 overflow-y-auto xl:overflow-hidden w-full relative">
     <!-- Main Content Area -->
-    <main class="flex-1 flex overflow-hidden bg-surface relative justify-center">
+    <main class="flex-1 flex overflow-visible xl:overflow-hidden bg-surface relative justify-center min-h-[min-content]">
         <div class="absolute inset-0 pointer-events-none bg-surface-tint/[0.02]"></div>
         
-        <div class="flex flex-row items-center justify-center py-4 px-8 z-10 w-full h-full overflow-hidden gap-8 lg:gap-16">
+        <div class="flex flex-col xl:flex-row items-center justify-center py-6 px-4 xl:px-8 z-10 w-full xl:h-full gap-6 xl:gap-16 max-w-full">
             
-            <!-- Left Column: Players -->
-            <div class="flex flex-col justify-between h-[min(70vh,90vw)] lg:h-[min(80vh,90vw)] flex-shrink-0 w-56 lg:w-64">
+            <ng-template #topPlayer>
                 <!-- Top Player Info -->
                 <div class="flex flex-col justify-start gap-4">
                     <div class="p-3 bg-surface-container-high rounded-xl text-on-surface-variant flex items-center gap-3">
@@ -36,14 +35,16 @@
                                (ngModelChange)="difficultyDepth.set($event)">
                     </div>
                 </div>
+            </ng-template>
 
+            <ng-template #bottomPlayer>
                 <!-- Bottom Player Info -->
                 <div class="flex flex-col justify-end">
                     <div class="p-3 bg-primary-container/20 rounded-xl text-primary flex items-center gap-3 border border-primary/20">
                         <div class="w-10 h-10 rounded-full overflow-hidden bg-primary/20 flex items-center justify-center flex-shrink-0">
                             <span class="material-symbols-outlined text-primary">person</span>
                         </div>
-                        <div class="flex flex-col justify-center">
+                        <div class="flex flex-col justify-center flex-1 w-full">
                             <!-- Editable Player Name -->
                             <input type="text" 
                                    class="font-headline font-bold text-lg block leading-none bg-transparent border-none p-0 focus:ring-0 text-primary w-full focus:outline-none placeholder-primary/50" 
@@ -53,21 +54,37 @@
                         </div>
                     </div>
                 </div>
+            </ng-template>
+
+            <!-- Mobile: Top Player -->
+            <div class="block xl:hidden w-full max-w-[min(100vw-32px,500px)]">
+                <ng-container *ngTemplateOutlet="topPlayer"></ng-container>
+            </div>
+
+            <!-- Desktop: Left Column (Both Players) -->
+            <div class="hidden xl:flex flex-col justify-between h-[min(80vh,90vw)] flex-shrink-0 w-64">
+                <ng-container *ngTemplateOutlet="topPlayer"></ng-container>
+                <ng-container *ngTemplateOutlet="bottomPlayer"></ng-container>
             </div>
 
             <!-- Right Column: The Chessboard -->
-            <div class="relative group max-w-full flex-shrink">
+            <div class="relative group max-w-full flex-shrink w-full xl:w-auto flex justify-center">
                 <div class="absolute -inset-4 bg-black/40 blur-2xl rounded-full opacity-50 group-hover:opacity-70 transition-opacity"></div>
-                <div class="relative w-[min(70vh,90vw)] lg:w-[min(80vh,90vw)] aspect-square bg-surface-container-highest p-1.5 rounded shadow-2xl mx-auto">
+                <div class="relative w-[min(90vw,90vh)] xl:w-[min(80vh,90vw)] max-w-[min(100vw-32px,600px)] xl:max-w-none aspect-square bg-surface-container-highest p-1.5 rounded shadow-2xl mx-auto">
                     <div #container class="cg-container blue merida w-full h-full rounded overflow-hidden"></div>
                 </div>
+            </div>
+
+            <!-- Mobile: Bottom Player -->
+            <div class="block xl:hidden w-full max-w-[min(100vw-32px,500px)] mt-2">
+                <ng-container *ngTemplateOutlet="bottomPlayer"></ng-container>
             </div>
         </div>
     </main>
 
     <!-- Right Panel -->
-    <aside class="w-[360px] lg:w-[400px] flex-shrink-0 bg-surface-container flex flex-col border-l border-outline-variant/10 shadow-[-10px_0_30px_rgba(0,0,0,0.3)] z-20 overflow-hidden">
-        <div class="p-6 flex flex-col h-full overflow-hidden">
+    <aside class="w-full xl:w-[400px] flex-shrink-0 bg-surface-container flex flex-col border-t xl:border-t-0 xl:border-l border-outline-variant/10 shadow-none xl:shadow-[-10px_0_30px_rgba(0,0,0,0.3)] z-20 overflow-visible xl:overflow-hidden pb-8 xl:pb-0">
+        <div class="p-6 flex flex-col h-full xl:overflow-hidden">
             <h3 class="font-manrope font-extrabold text-xs uppercase tracking-widest text-secondary/60 mb-4">Session Settings</h3>
             
             <!-- Mode Toggle -->
